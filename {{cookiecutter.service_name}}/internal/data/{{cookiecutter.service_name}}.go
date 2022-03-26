@@ -10,20 +10,20 @@ import (
 	"gorm.io/gorm"
 )
 
-type accountRepoImpl struct {
+type {{cookiecutter.service_name}}RepoImpl struct {
 	data *Data
 	log  *log.Helper
 }
 
-// NewAccountRepo .
-func NewAccountRepo(data *Data, logger log.Logger) biz.AccountRepo {
-	return &accountRepoImpl{
+// New{{cookiecutter.serviceUpper}}Repo .
+func New{{cookiecutter.serviceUpper}}Repo(data *Data, logger log.Logger) biz.{{cookiecutter.serviceUpper}}Repo {
+	return &{{cookiecutter.service_name}}RepoImpl{
 		data: data,
 		log:  log.NewHelper(logger),
 	}
 }
 
-func (r *accountRepoImpl) CreateUser(ctx context.Context, user *biz.User) error {
+func (r *{{cookiecutter.service_name}}RepoImpl) CreateUser(ctx context.Context, user *biz.User) error {
 	err := r.data.mysql.Transaction(func(tx *gorm.DB) error {
 		if err := r.data.mysql.Create(user).Error; err != nil {
 			log.Info("创建用户失败")
@@ -45,7 +45,7 @@ func (r *accountRepoImpl) CreateUser(ctx context.Context, user *biz.User) error 
 	return nil
 }
 
-func (r *accountRepoImpl) UpdateUser(ctx context.Context, user *biz.User) error {
+func (r *{{cookiecutter.service_name}}RepoImpl) UpdateUser(ctx context.Context, user *biz.User) error {
 	if err := r.data.mysql.Save(user).Error; err != nil {
 		log.Info("更新用户失败")
 		return err
@@ -54,7 +54,7 @@ func (r *accountRepoImpl) UpdateUser(ctx context.Context, user *biz.User) error 
 }
 
 //根据uid获取用户
-func (r *accountRepoImpl) GetUser(ctx context.Context, uid int64) (user *biz.User, err error) {
+func (r *{{cookiecutter.service_name}}RepoImpl) GetUser(ctx context.Context, uid int64) (user *biz.User, err error) {
 	if err = r.data.mysql.Where("uid = ?", uid).First(&user).Error; err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (r *accountRepoImpl) GetUser(ctx context.Context, uid int64) (user *biz.Use
 }
 
 //根据邮箱查询用户
-func (r *accountRepoImpl) GetUserByEmail(ctx context.Context, email string) (user *biz.User, err error) {
+func (r *{{cookiecutter.service_name}}RepoImpl) GetUserByEmail(ctx context.Context, email string) (user *biz.User, err error) {
 	if err = r.data.mysql.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -73,7 +73,7 @@ func (r *accountRepoImpl) GetUserByEmail(ctx context.Context, email string) (use
 }
 
 //根据手机号查询用户
-func (r *accountRepoImpl) GetUserByPhone(ctx context.Context, phone string) (user *biz.User, err error) {
+func (r *{{cookiecutter.service_name}}RepoImpl) GetUserByPhone(ctx context.Context, phone string) (user *biz.User, err error) {
 	if err = r.data.mysql.Where("phone = ?", phone).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
@@ -84,7 +84,7 @@ func (r *accountRepoImpl) GetUserByPhone(ctx context.Context, phone string) (use
 }
 
 //保存邮箱注册验证码
-func (r *accountRepoImpl) SaveEmailRegisterCode(ctx context.Context, code *biz.RegisterCode) error {
+func (r *{{cookiecutter.service_name}}RepoImpl) SaveEmailRegisterCode(ctx context.Context, code *biz.RegisterCode) error {
 	if err := r.data.mysql.Create(code).Error; err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func (r *accountRepoImpl) SaveEmailRegisterCode(ctx context.Context, code *biz.R
 }
 
 //查询最新的邮件验证码
-func (r *accountRepoImpl) GetEmailRegisterCode(ctx context.Context, email string) (code *biz.RegisterCode, err error) {
+func (r *{{cookiecutter.service_name}}RepoImpl) GetEmailRegisterCode(ctx context.Context, email string) (code *biz.RegisterCode, err error) {
 	if err = r.data.mysql.Where("email = ?", email).Order("create_timestamp DESC").First(&code).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil

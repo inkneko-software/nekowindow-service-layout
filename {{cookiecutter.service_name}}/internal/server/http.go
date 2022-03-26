@@ -13,7 +13,7 @@ import (
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, service *service.AccountService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, service *service.{{cookiecutter.serviceUpper}}Service, logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -37,9 +37,9 @@ func NewHTTPServer(c *conf.Server, service *service.AccountService, logger log.L
 		ctx.Status(200)
 	})
 
-	account := router.Group("/x/web-interface/account/")
+	{{cookiecutter.service_name}} := router.Group("/x/web-interface/{{cookiecutter.service_name}}/")
 
-	account.Handle("POST", "/register", func(ctx *gin.Context) {
+	{{cookiecutter.service_name}}.Handle("POST", "/register", func(ctx *gin.Context) {
 		resp, err := service.CreateUser(ctx, &v1.CreateUserRequest{
 			Email:    ctx.PostForm("email"),
 			Password: ctx.PostForm("password"),
@@ -58,7 +58,7 @@ func NewHTTPServer(c *conf.Server, service *service.AccountService, logger log.L
 		ctx.JSON(200, gin.H{"code": 0, "message": "注册成功"})
 	})
 
-	account.Handle("POST", "/login", func(ctx *gin.Context) {
+	{{cookiecutter.service_name}}.Handle("POST", "/login", func(ctx *gin.Context) {
 		resp, err := service.EmailLogin(ctx, &v1.EmailLoginRequest{
 			Email:    ctx.PostForm("email"),
 			Password: ctx.PostForm("password"),
@@ -75,7 +75,7 @@ func NewHTTPServer(c *conf.Server, service *service.AccountService, logger log.L
 		ctx.Redirect(301, "https://window.inkneko.com")
 	})
 
-	account.Handle("POST", "/sendRegisterEmail", func(ctx *gin.Context) {
+	{{cookiecutter.service_name}}.Handle("POST", "/sendRegisterEmail", func(ctx *gin.Context) {
 		resp, err := service.SendRegisterEmail(ctx, &v1.SendRegisterEmailRequest{Email: ctx.PostForm("email")})
 		if err != nil {
 			ctx.AbortWithStatusJSON(200, err)

@@ -26,12 +26,12 @@ func initApp(confServer *conf.Server, confData *conf.Data, registry *conf.Regist
 	if err != nil {
 		return nil, nil, err
 	}
-	accountRepo := data.NewAccountRepo(dataData, logger)
+	{{cookiecutter.service_name}}Repo := data.New{{cookiecutter.serviceUpper}}Repo(dataData, logger)
 	identifyRepo := data.NewIdentifyRepo(dataData, logger)
-	accountUsecase := biz.NewAccountUsecase(accountRepo, identifyRepo, logger)
-	accountService := service.NewAccountService(accountUsecase, logger)
-	httpServer := server.NewHTTPServer(confServer, accountService, logger)
-	grpcServer := server.NewGRPCServer(confServer, accountService, logger)
+	{{cookiecutter.service_name}}Usecase := biz.New{{cookiecutter.serviceUpper}}Usecase({{cookiecutter.service_name}}Repo, identifyRepo, logger)
+	{{cookiecutter.service_name}}Service := service.New{{cookiecutter.serviceUpper}}Service({{cookiecutter.service_name}}Usecase, logger)
+	httpServer := server.NewHTTPServer(confServer, {{cookiecutter.service_name}}Service, logger)
+	grpcServer := server.NewGRPCServer(confServer, {{cookiecutter.service_name}}Service, logger)
 	registrar := server.NewRegistrar(registry)
 	app := newApp(logger, httpServer, grpcServer, registrar)
 	return app, func() {

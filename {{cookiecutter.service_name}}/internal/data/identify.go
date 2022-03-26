@@ -13,7 +13,6 @@ type identifyRepoImpl struct {
 	log  *log.Helper
 }
 
-// NewAccountRepo .
 func NewIdentifyRepo(data *Data, logger log.Logger) biz.IdentifyRepo {
 	return &identifyRepoImpl{
 		data: data,
