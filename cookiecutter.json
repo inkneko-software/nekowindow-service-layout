@@ -1,6 +1,6 @@
 {
     "kind": "service",
     "department": "main",
-    "service": "demo",
+    "service_name": "demo",
     "serviceUpper": "Demo"
 }
