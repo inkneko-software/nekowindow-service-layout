@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: interface-ingress
+  namespace: nekowindow
+  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: "api.inkneko.com"
+      http:
+        paths:
+          - path: /x/web-interface/account/
+            pathType: Prefix
+            backend:
+              service:
+                name: service-main-account
+                port:
+                  number: 8000

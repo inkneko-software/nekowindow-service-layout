@@ -1,0 +1,41 @@
+apiVersion:  apps/v1
+kind: Deployment
+metadata:
+  name: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}-deployment"
+  namespace: nekowindow
+  labels:
+    app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
+        logging: "true"
+    spec:
+      containers:
+        - name: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}-container"
+          image: docker.inkneko.com:344/nekowindow/{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
+  namespace: nekowindow
+  labels:
+    app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
+spec:
+  ports:
+    - port: 8000
+      name: http
+    - port: 9000
+      name: grpc
+  selector:
+    app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
