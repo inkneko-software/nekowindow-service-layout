@@ -19,7 +19,7 @@ func New{{cookiecutter.serviceUpper}}HttpController(service *service.{{cookiecut
 	return &{{cookiecutter.serviceUpper}}HttpController{service: service, log: log.NewHelper(logger)}
 }
 
-func (controller *{{cookiecutter.serviceUpper}}HttpController) ExampleHandler(ctx gin.Context) {
+func (controller *{{cookiecutter.serviceUpper}}HttpController) ExampleHandler(ctx *gin.Context) {
 	//Implement your handler here.
 	req := v1.ExampleReq{}
 	resp, err := service.ExampleService(ctx, req)
