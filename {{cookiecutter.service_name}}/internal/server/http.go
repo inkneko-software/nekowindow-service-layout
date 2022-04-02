@@ -4,6 +4,7 @@ import (
 	v1 "nekowindow-backend/api/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/v1"
 	"nekowindow-backend/app/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/internal/conf"
 	"nekowindow-backend/app/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/internal/service"
+	"nekowindow-backend/pkg/net/http/middleware/auth"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ import (
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, service *service.{{cookiecutter.serviceUpper}}Service, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, authMiddleware *auth.AuthMiddleware, handler *{{cookiecutter.serviceUpper}}HttpController logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -39,51 +40,9 @@ func NewHTTPServer(c *conf.Server, service *service.{{cookiecutter.serviceUpper}
 
 	{{cookiecutter.service_name}} := router.Group("/x/web-interface/{{cookiecutter.service_name}}/")
 
-	{{cookiecutter.service_name}}.Handle("POST", "/register", func(ctx *gin.Context) {
-		resp, err := service.CreateUser(ctx, &v1.CreateUserRequest{
-			Email:    ctx.PostForm("email"),
-			Password: ctx.PostForm("password"),
-			Code:     ctx.PostForm("code"),
-		})
-
-		if err != nil {
-			ctx.AbortWithStatusJSON(200, err)
-			return
-		}
-
-		expire := 31536000000 // 365*24*60*60*1000
-		ctx.SetCookie("uid", strconv.FormatInt(resp.Uid, 10), expire, "/", ".inkneko.com", false, true)
-		ctx.SetCookie("SESSIONKEY", resp.SessionKey, expire, "/", ".inkneko.com", false, true)
-
-		ctx.JSON(200, gin.H{"code": 0, "message": "注册成功"})
-	})
-
-	{{cookiecutter.service_name}}.Handle("POST", "/login", func(ctx *gin.Context) {
-		resp, err := service.EmailLogin(ctx, &v1.EmailLoginRequest{
-			Email:    ctx.PostForm("email"),
-			Password: ctx.PostForm("password"),
-		})
-
-		if err != nil {
-			ctx.AbortWithStatusJSON(200, err)
-			return
-		}
-
-		expire := 31536000000 // 365*24*60*60*1000
-		ctx.SetCookie("uid", strconv.FormatInt(resp.Uid, 10), expire, "/", ".inkneko.com", false, true)
-		ctx.SetCookie("SESSIONKEY", resp.SessionKey, expire, "/", ".inkneko.com", false, true)
-		ctx.Redirect(301, "https://window.inkneko.com")
-	})
-
-	{{cookiecutter.service_name}}.Handle("POST", "/sendRegisterEmail", func(ctx *gin.Context) {
-		resp, err := service.SendRegisterEmail(ctx, &v1.SendRegisterEmailRequest{Email: ctx.PostForm("email")})
-		if err != nil {
-			ctx.AbortWithStatusJSON(200, err)
-			return
-		}
-
-		ctx.JSON(200, gin.H{"code": 0, "data": resp})
-	})
+	{{cookiecutter.service_name}}.Handle("GET", "/example", handler.ExampleHandler)
+	{{cookiecutter.service_name}}.Handle("GET", "/auth_or_exit", authMiddleware.UserAuth, handler.ExampleHandler)
+	
 
 	srv.HandlePrefix("/", router)
 	return srv

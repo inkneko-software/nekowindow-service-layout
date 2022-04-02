@@ -65,7 +65,6 @@ func main() {
 	)
 	defer c.Close()
 
-	logger.Log(log.LevelDebug, "go", "gogogo")
 	if err := c.Load(); err != nil {
 		panic(err)
 	}

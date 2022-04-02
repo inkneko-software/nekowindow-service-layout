@@ -41,11 +41,3 @@ func (s *{{cookiecutter.serviceUpper}}Service) CreateUser(ctx context.Context, r
 		SessionKey: sessionKey,
 	}, nil
 }
-
-
-func (s *{{cookiecutter.serviceUpper}}Service) ChangeSign(context.Context, *v1.ChangeSignReq) (*v1.ChangeSignReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeSign not implemented")
-}
-func (s *{{cookiecutter.serviceUpper}}Service) ChangeUserInfo(context.Context, *v1.ChangeUserInfoReq) (*v1.ChangeUserInfoReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeUserInfo not implemented")
-}
