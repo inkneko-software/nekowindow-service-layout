@@ -7,10 +7,11 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/google/wire"
 	consulAPI "github.com/hashicorp/consul/api"
+	"nekowindow-backend/pkg/net/http/middleware/auth"
 )
 
 // ProviderSet is server providers.
-var ProviderSet = wire.NewSet(NewHTTPServer, NewGRPCServer, NewRegistrar, NewDiscovery)
+var ProviderSet = wire.NewSet(NewHTTPServer, NewGRPCServer, NewRegistrar, NewDiscovery, auth.NewAuthMiddleWare)
 
 func NewRegistrar(conf *conf.Registry) registry.Registrar {
 	c := consulAPI.DefaultConfig()
