@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	v1 "nekowindow-backend/api/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/v1"
+	v1 "nekowindow-backend/app/service/{{cookiecutter.department}}/{{cookiecutter.service_name}}/api/v1"
 	"nekowindow-backend/app/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/internal/biz"
 
 	"github.com/go-kratos/kratos/v2/log"

@@ -2,7 +2,7 @@ package biz
 
 import (
 	"context"
-	v1 "nekowindow-backend/api/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/v1"
+	v1 "nekowindow-backend/app/service/{{cookiecutter.department}}/{{cookiecutter.service_name}}/api/v1"
 	"github.com/go-kratos/kratos/v2/log"
 )
 

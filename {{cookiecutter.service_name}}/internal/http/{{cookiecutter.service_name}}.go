@@ -2,7 +2,7 @@ package http
 
 import (
 	"nekowindow-backend/app/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/internal/service"
-	v1 "nekowindow-backend/api/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/v1"
+	v1 "nekowindow-backend/app/service/{{cookiecutter.department}}/{{cookiecutter.service_name}}/api/v1"
 	"nekowindow-backend/pkg/net/http/middleware/response"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +11,12 @@ import (
 
 // {{cookiecutter.serviceUpper}}FileSystemController is a http controller.
 type {{cookiecutter.serviceUpper}}HttpController struct {
-	service *service.{{cookiecutter.serviceUpper}}Service
+	s *service.{{cookiecutter.serviceUpper}}Service
 	log     *log.Helper
 }
 
 func New{{cookiecutter.serviceUpper}}HttpController(service *service.{{cookiecutter.serviceUpper}}Service, logger log.Logger) *{{cookiecutter.serviceUpper}}HttpController {
-	return &{{cookiecutter.serviceUpper}}HttpController{service: service, log: log.NewHelper(logger)}
+	return &{{cookiecutter.serviceUpper}}HttpController{s: service, log: log.NewHelper(logger)}
 }
 
 func (controller *{{cookiecutter.serviceUpper}}HttpController) ExampleHandler(ctx *gin.Context) {
