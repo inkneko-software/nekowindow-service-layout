@@ -43,7 +43,7 @@ type {{cookiecutter.serviceUpper}}Repo interface {
 
 type IdentifyRepo interface {
 	//创建会话
-	CreateSession(ctx context.Context, uid int64, create int64, expire int64) (sessionKey string, err error)
+	CreateSession(ctx context.Context, uid uint32, create int64, expire int64) (sessionKey string, err error)
 }
 
 type {{cookiecutter.serviceUpper}}Usecase struct {

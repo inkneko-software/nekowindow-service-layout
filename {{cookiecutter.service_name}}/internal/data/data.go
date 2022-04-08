@@ -2,7 +2,7 @@ package data
 
 import (
 	"context"
-	identifyv1 "nekowindow-backend/api/service/main/identify/v1"
+	identifyv1 "nekowindow-backend/app/service/main/identify/api/v1"
 	"nekowindow-backend/app/{{cookiecutter.kind}}/{{cookiecutter.department}}/{{cookiecutter.service_name}}/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
