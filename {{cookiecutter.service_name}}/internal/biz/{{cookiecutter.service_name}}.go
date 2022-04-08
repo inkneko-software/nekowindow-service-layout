@@ -49,11 +49,12 @@ type IdentifyRepo interface {
 type {{cookiecutter.serviceUpper}}Usecase struct {
 	ar  {{cookiecutter.serviceUpper}}Repo
 	ir  IdentifyRepo
+	tm  Transaction
 	log *log.Helper
 }
 
-func New{{cookiecutter.serviceUpper}}Usecase(ar {{cookiecutter.serviceUpper}}Repo, ir IdentifyRepo, logger log.Logger) *{{cookiecutter.serviceUpper}}Usecase {
-	return &{{cookiecutter.serviceUpper}}Usecase{ar: ar, ir: ir, log: log.NewHelper(log.With(logger, "package", "biz"))}
+func New{{cookiecutter.serviceUpper}}Usecase(ar {{cookiecutter.serviceUpper}}Repo, ir IdentifyRepo, tm  Transaction, logger log.Logger) *{{cookiecutter.serviceUpper}}Usecase {
+	return &{{cookiecutter.serviceUpper}}Usecase{ar: ar, ir: ir, tm:tm log: log.NewHelper(log.With(logger, "package", "biz"))}
 }
 
 
