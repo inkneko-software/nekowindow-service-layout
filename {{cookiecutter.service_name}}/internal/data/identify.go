@@ -20,7 +20,7 @@ func NewIdentifyRepo(data *Data, logger log.Logger) biz.IdentifyRepo {
 	}
 }
 
-func (r *identifyRepoImpl) CreateSession(ctx context.Context, uid int64, create int64, expire int64) (sessionKey string, err error) {
+func (r *identifyRepoImpl) CreateSession(ctx context.Context, uid uint32, create int64, expire int64) (sessionKey string, err error) {
 	resp, err := r.data.ic.CreateSession(ctx, &v1.CreateSessionRequest{Uid: uid, Create: create, Expire: expire})
 
 	if err != nil {
