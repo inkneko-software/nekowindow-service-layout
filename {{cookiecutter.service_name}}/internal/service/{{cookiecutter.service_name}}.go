@@ -21,7 +21,7 @@ type {{cookiecutter.serviceUpper}}Service struct {
 }
 
 func New{{cookiecutter.serviceUpper}}Service(uc *biz.{{cookiecutter.serviceUpper}}Usecase, logger log.Logger) *{{cookiecutter.serviceUpper}}Service {
-	return &{{cookiecutter.serviceUpper}}Service{uc: uc, log: log.NewHelper(logger)}
+	return &{{cookiecutter.serviceUpper}}Service{uc: uc, log: log.NewHelper(log.With(logger, "package", "biz")))}
 }
 
 // {{cookiecutter.serviceUpper}}Service impl example

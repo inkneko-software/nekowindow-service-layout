@@ -20,7 +20,7 @@ var ProviderSet = wire.NewSet(NewData, New{{cookiecutter.serviceUpper}}Repo, New
 // Data .
 type Data struct {
 	// TODO wrapped database client
-	mysql *gorm.DB
+	db *gorm.DB
 	ic    identifyv1.IdentifyClient
 }
 
@@ -39,7 +39,7 @@ func NewData(
 		panic(err)
 	}
 
-	return &Data{mysql: mysqldb, ic: ic}, cleanup, nil
+	return &Data{db: mysqldb, ic: ic}, cleanup, nil
 }
 
 func NewIdentifyClient(r registry.Discovery) identifyv1.IdentifyClient {

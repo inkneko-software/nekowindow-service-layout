@@ -19,7 +19,7 @@ type {{cookiecutter.service_name}}RepoImpl struct {
 func New{{cookiecutter.serviceUpper}}Repo(data *Data, logger log.Logger) biz.{{cookiecutter.serviceUpper}}Repo {
 	return &{{cookiecutter.service_name}}RepoImpl{
 		data: data,
-		log:  log.NewHelper(logger),
+		log:  log.NewHelper(log.With(logger, "package", "data"))),
 	}
 }
 

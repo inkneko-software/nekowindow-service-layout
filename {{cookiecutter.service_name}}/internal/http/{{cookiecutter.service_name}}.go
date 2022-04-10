@@ -16,7 +16,7 @@ type {{cookiecutter.serviceUpper}}HttpController struct {
 }
 
 func New{{cookiecutter.serviceUpper}}HttpController(service *service.{{cookiecutter.serviceUpper}}Service, logger log.Logger) *{{cookiecutter.serviceUpper}}HttpController {
-	return &{{cookiecutter.serviceUpper}}HttpController{s: service, log: log.NewHelper(logger)}
+	return &{{cookiecutter.serviceUpper}}HttpController{s: service, log: log.NewHelper(log.With(logger, "package", "http")))}
 }
 
 func (controller *{{cookiecutter.serviceUpper}}HttpController) ExampleHandler(ctx *gin.Context) {
