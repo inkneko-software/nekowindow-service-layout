@@ -1,7 +1,7 @@
 apiVersion:  apps/v1
 kind: Deployment
 metadata:
-  name: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}-deployment"
+  name: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
   namespace: nekowindow
   labels:
     app: "{{cookiecutter.kind}}-{{cookiecutter.department}}-{{cookiecutter.service_name}}"
