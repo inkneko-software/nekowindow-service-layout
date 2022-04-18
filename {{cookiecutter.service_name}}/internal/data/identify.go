@@ -16,7 +16,7 @@ type identifyRepoImpl struct {
 func NewIdentifyRepo(data *Data, logger log.Logger) biz.IdentifyRepo {
 	return &identifyRepoImpl{
 		data: data,
-		log:  log.NewHelper(log.With(logger, "package", "data"))),
+		log:  log.NewHelper(log.With(logger, "package", "data")),
 	}
 }
 
